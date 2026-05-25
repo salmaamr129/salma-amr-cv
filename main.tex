@@ -36,11 +36,20 @@
 \titlespacing*{\section}{0pt}{10pt}{6pt}
 
 % ---------- Hyperlinks ----------
-% hidelinks: no colored boxes / underlines in the PDF. Cleaner for print
-% and recruiters; URLs are still clickable and the text below each link
-% is also written out so ATS parsers can read it even if they ignore
-% the link annotation.
-\usepackage[hidelinks]{hyperref}
+% Colored URLs (no boxes / underlines): subtle dark-blue so recruiters
+% see they're clickable, but still print-friendly. ATS parsers read the
+% visible URL text below each link regardless of color, so this stays
+% ATS-safe — the visible text in \href{...}{text} is unchanged.
+% xcolor must be loaded BEFORE hyperref for the color mixing (blue!55!black)
+% syntax to be available in \hypersetup.
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue!55!black,
+    linkcolor=blue!55!black,
+    citecolor=blue!55!black
+}
 
 % ---------- Misc ----------
 \pagestyle{empty}             % no page numbers / headers / footers

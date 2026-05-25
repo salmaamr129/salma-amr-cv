@@ -25,5 +25,7 @@ out/
 .DS_Store
 Thumbs.db
 
-## Keep the source PDF out of git history (uncomment if you do want to track it)
+## Ignore build PDFs (e.g. main.pdf from latexmk), but keep the final
+## renamed CV that CI commits back to main so GitHub renders it natively.
 *.pdf
+!Salma_Amr_CV.pdf

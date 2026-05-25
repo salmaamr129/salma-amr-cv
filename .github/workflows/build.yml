@@ -3,13 +3,20 @@ name: Build PDF
 on:
   push:
     branches: [main]
-    paths-ignore: ['**.md', 'assets/**', '.github/PULL_REQUEST_TEMPLATE.md']
+    # Skip when the only change is the auto-committed PDF, to avoid an
+    # infinite CI loop.
+    paths-ignore:
+      - '**.md'
+      - 'assets/**'
+      - '.github/PULL_REQUEST_TEMPLATE.md'
+      - 'Salma_Amr_CV.pdf'
   pull_request:
-    paths-ignore: ['**.md', 'assets/**']
+    paths-ignore: ['**.md', 'assets/**', 'Salma_Amr_CV.pdf']
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # write: needed to commit the built PDF back to main
+  contents: write
 
 jobs:
   build:
@@ -23,9 +30,31 @@ jobs:
             texlive/texlive:TL2025-historic \
             latexmk -pdf -interaction=nonstopmode -file-line-error main.tex
 
+      - name: Rename PDF
+        run: mv main.pdf Salma_Amr_CV.pdf
+
       - name: Upload PDF artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
-          name: main-pdf
-          path: main.pdf
+          name: Salma_Amr_CV
+          path: Salma_Amr_CV.pdf
           retention-days: 30
+
+      - name: Commit built PDF back to main
+        # Only on direct pushes to main (skipped for PRs and forks).
+        # GitHub renders the committed PDF natively at:
+        #   github.com/<owner>/<repo>/blob/main/Salma_Amr_CV.pdf
+        # The "[skip ci]" tag in the commit message keeps the next push
+        # from triggering another build (belt-and-suspenders alongside
+        # paths-ignore above).
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Salma_Amr_CV.pdf
+          if git diff --cached --quiet; then
+            echo "PDF is unchanged; nothing to commit."
+            exit 0
+          fi
+          git commit -m "Update Salma_Amr_CV.pdf [skip ci]"
+          git push

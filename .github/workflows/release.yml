@@ -23,12 +23,12 @@ jobs:
             latexmk -pdf -interaction=nonstopmode -file-line-error main.tex
 
       - name: Rename PDF with tag
-        run: mv main.pdf "main-${{ github.ref_name }}.pdf"
+        run: mv main.pdf "Salma_Amr_CV-${{ github.ref_name }}.pdf"
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "${{ github.ref_name }}" \
-            "main-${{ github.ref_name }}.pdf" \
+            "Salma_Amr_CV-${{ github.ref_name }}.pdf" \
             --generate-notes

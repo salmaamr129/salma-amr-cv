@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 90" role="img" aria-label="latex-kit logo">
+  <style>
+    .latex { fill: #1e1e2e; }
+    .kit   { fill: #4f7cd0; }
+    @media (prefers-color-scheme: dark) {
+      .latex { fill: #e6e6e6; }
+      .kit   { fill: #89b4fa; }
+    }
+  </style>
+
+  <!-- LaTeX wordmark, classic logo positioning -->
+  <g class="latex" font-family="'Latin Modern Roman','TeX Gyre Termes','STIX Two Text','Times New Roman',serif">
+    <text x="0"   y="70" font-size="72">L</text>
+    <text x="38"  y="34" font-size="46">A</text>
+    <text x="68"  y="70" font-size="72">T</text>
+    <text x="108" y="86" font-size="72">E</text>
+    <text x="148" y="70" font-size="72">X</text>
+  </g>
+
+  <!-- divider dot -->
+  <circle cx="206" cy="50" r="2.4" class="kit" opacity="0.7"/>
+
+  <!-- kit, monospace, accent color -->
+  <text x="222" y="68"
+        class="kit"
+        font-family="'Fira Code','JetBrains Mono','DejaVu Sans Mono',monospace"
+        font-size="50" font-weight="600" letter-spacing="2">kit</text>
+</svg>
